@@ -16,8 +16,8 @@ func makeRouter() *gin.Engine {
 }
 
 func makeUserRoute(r *gin.Engine) {
-	svc := service.MakeUser()
-	ctrl := controller.MakeUser(svc)
+	svc := service.MakeUserService()
+	ctrl := controller.MakeUserController(svc)
 
 	ctrl.Setup(r)
 }

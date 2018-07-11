@@ -3,23 +3,23 @@ package controller
 import (
 	"net/http"
 
-	"github.com/alextanhongpin/gin-starter/service"
 	"github.com/gin-gonic/gin"
+
+	"github.com/alextanhongpin/gin-starter/model"
 )
 
 type (
-	// User represents the User Controller
-	User interface {
-		GetUser(c *gin.Context)
-		Setup(r *gin.Engine)
+	userService interface {
+		GetUser(name string) (*model.User, error)
 	}
 
-	userController struct {
-		Service service.User
+	// UserController represents the User Controller
+	UserController struct {
+		Service userService
 	}
 )
 
-func (u *userController) GetUser(c *gin.Context) {
+func (u *UserController) GetUser(c *gin.Context) {
 	name := c.Param("name")
 	user, err := u.Service.GetUser(name)
 	if err != nil {
@@ -33,12 +33,12 @@ func (u *userController) GetUser(c *gin.Context) {
 	c.JSON(http.StatusOK, &user)
 }
 
-func (u *userController) Setup(r *gin.Engine) {
+func (u *UserController) Setup(r *gin.Engine) {
 	e := r.Group("/users")
 	e.GET(":name", u.GetUser)
 }
 
-// MakeUser returns a pointer to the userController
-func MakeUser(svc service.User) User {
-	return &userController{svc}
+// MakeUserController returns a pointer to the userController
+func MakeUserController(svc userService) *UserController {
+	return &UserController{svc}
 }
