@@ -9,11 +9,11 @@ COPY . .
 # Get the vendor library
 RUN go version && go get -u golang.org/x/vgo
 
-RUN vgo mod -sync
+RUN vgo install
 
 # https://github.com/ethereum/go-ethereum/issues/2738
 # Build static binary "-getmode=vendor" does not work with go-ethereum 
-RUN vgo build -o app main.go
+RUN vgo build -getmode=vendor -o app -ldflags "-linkmode external -extldflags -static"
 
 # Multi-stage build will just copy the binary to an alpine image.
 FROM alpine:3.7
@@ -26,10 +26,10 @@ WORKDIR /root
 ENV GIN_MODE=release
 
 # Expose the running port
-EXPOSE 8000
+EXPOSE 3000
 
 # Copy the binary to the corresponding folder
-COPY --from=builder $GOPATH/src/github.com/alextanhongpin/go-gin-starter/app .
+COPY --from=builder /go/src/github.com/alextanhongpin/go-gin-starter/app .
 
 # ARG BUILD_DATE
 # ARG NAME
