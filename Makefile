@@ -1,5 +1,5 @@
-# include .env
-# export
+include .env
+export
 
 # Docker labels-schema. See http://label-schema.org/rc1/
 IMAGE_NAME := alextanhongpin/gin-starter
@@ -37,6 +37,3 @@ docker:
 	# --build-arg VCS_REF="${VCS_REF}" \
 	# --build-arg VENDOR="${VENDOR}" \
 	# --build-arg VERSION="${VERSION}" \
-
-build:
-	@echo Verify build.
