@@ -1,0 +1,14 @@
+# Exclude Dockerfile
+Dockerfile
+
+# Exclude documentations
+README.md
+
+# Exclude build files
+Makefile
+
+# Exclude .env, use environment variables instead
+.env
+
+# Exclude vendor folder
+# vendor/
