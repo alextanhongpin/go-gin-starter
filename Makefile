@@ -1,5 +1,5 @@
-include .env
-export
+# include .env
+# export
 
 # Docker labels-schema. See http://label-schema.org/rc1/
 IMAGE_NAME := alextanhongpin/gin-starter
