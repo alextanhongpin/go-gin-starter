@@ -1,6 +1,6 @@
 package usersvc
 
-import "github.com/alextanhongpin/gin-starter/model"
+import "github.com/alextanhongpin/go-gin-starter/model"
 
 // RepositoryImpl represents the implementation of the repository for user
 type RepositoryImpl struct {

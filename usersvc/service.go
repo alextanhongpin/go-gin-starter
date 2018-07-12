@@ -1,6 +1,6 @@
 package usersvc
 
-import "github.com/alextanhongpin/gin-starter/model"
+import "github.com/alextanhongpin/go-gin-starter/model"
 
 type repository interface {
 	GetUser(name string) (*model.User, error)

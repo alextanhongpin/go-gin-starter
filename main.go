@@ -1,7 +1,8 @@
 package main
 
 import (
-	"github.com/alextanhongpin/gin-starter/usersvc"
+	"github.com/alextanhongpin/go-gin-starter/usersvc"
+
 	"github.com/gin-gonic/gin"
 )
 

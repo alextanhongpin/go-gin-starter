@@ -3,7 +3,7 @@ package usersvc
 import (
 	"net/http"
 
-	"github.com/alextanhongpin/gin-starter/model"
+	"github.com/alextanhongpin/go-gin-starter/model"
 	"github.com/gin-gonic/gin"
 )
 
