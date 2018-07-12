@@ -39,4 +39,4 @@ docker:
 	# --build-arg VERSION="${VERSION}" \
 
 build:
-	@echo Build verified!
+	@echo Verify build.
