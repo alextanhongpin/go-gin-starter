@@ -39,3 +39,6 @@ docker:
 	# --build-arg VCS_REF="${VCS_REF}" \
 	# --build-arg VENDOR="${VENDOR}" \
 	# --build-arg VERSION="${VERSION}" \
+
+start:
+	vgo run main.go

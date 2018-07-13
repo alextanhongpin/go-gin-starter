@@ -9,6 +9,7 @@ require (
 	github.com/golang/protobuf v1.1.0 // indirect
 	github.com/hashicorp/hcl v0.0.0-20180404174102-ef8a98b0bbce
 	github.com/kr/pretty v0.1.0 // indirect
+	github.com/kr/pty v1.1.2
 	github.com/magiconair/properties v1.8.0
 	github.com/manucorporat/sse v0.0.0-20160126180136-ee05b128a739 // indirect
 	github.com/mattn/go-isatty v0.0.3 // indirect

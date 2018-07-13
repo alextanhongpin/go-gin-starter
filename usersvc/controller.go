@@ -3,6 +3,7 @@ package usersvc
 import (
 	"net/http"
 
+	"github.com/alextanhongpin/go-gin-starter/middleware"
 	"github.com/alextanhongpin/go-gin-starter/model"
 	"github.com/gin-gonic/gin"
 )
@@ -33,12 +34,15 @@ func (u *Controller) GetUser(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, &user)
+	c.JSON(http.StatusOK, gin.H{
+		"data": user,
+	})
 }
 
 // Setup binds the router to the user controllers
-func (u *Controller) Setup(r *gin.Engine) {
+func (u *Controller) Setup(r *gin.Engine, enable bool) {
 	e := r.Group("/users")
+	e.Use(middleware.Toggle(enable))
 	{
 		e.GET("/:name", u.GetUser)
 		// e.POST("", u.PostUser)

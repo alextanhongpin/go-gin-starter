@@ -9,7 +9,9 @@ type RepositoryImpl struct {
 
 // GetUser takes a name and returns a user or error
 func (r *RepositoryImpl) GetUser(name string) (*model.User, error) {
-	return nil, nil
+	return &model.User{
+		Name: name,
+	}, nil
 }
 
 // NewRepository returns a new pointer to the repository implementation

@@ -5,6 +5,7 @@ import (
 
 	"github.com/alextanhongpin/go-gin-starter/config"
 	"github.com/alextanhongpin/go-gin-starter/usersvc"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -37,7 +38,7 @@ func main() {
 	r := newRouter()
 
 	// Setup services
-	usersvc.New(r)
+	usersvc.New(r, cfg.GetBool("usersvc_on"))
 	// svc1.New(r, ...options)
 	// svc2.New(r, ...options)
 	// svc3.New(r, ...options)

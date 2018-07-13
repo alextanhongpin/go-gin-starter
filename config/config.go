@@ -9,5 +9,6 @@ type Config = viper.Viper
 func New() *Config {
 	v := viper.New()
 	v.SetDefault("port", ":3030")
+	v.SetDefault("usersvc_on", true)
 	return v
 }
