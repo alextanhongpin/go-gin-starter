@@ -1,8 +1,10 @@
 include .env
 export
 
+.PHONY: vendor
+
 # Docker labels-schema. See http://label-schema.org/rc1/
-IMAGE_NAME := alextanhongpin/gin-starter
+IMAGE_NAME := alextanhongpin/go-gin-starter
 # TAG := $(shell git log -1 --pretty=%h)
 # BUILD_DATE := $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 # NAME := $(shell basename `git rev-parse --show-toplevel`)
@@ -37,6 +39,3 @@ docker:
 	# --build-arg VCS_REF="${VCS_REF}" \
 	# --build-arg VENDOR="${VENDOR}" \
 	# --build-arg VERSION="${VERSION}" \
-
-greet:
-	@echo Test greeting!

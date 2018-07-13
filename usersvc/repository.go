@@ -12,7 +12,7 @@ func (r *RepositoryImpl) GetUser(name string) (*model.User, error) {
 	return nil, nil
 }
 
-// MakeRepository returns a new pointer to the repository implementation
-func MakeRepository() *RepositoryImpl {
+// NewRepository returns a new pointer to the repository implementation
+func NewRepository() *RepositoryImpl {
 	return &RepositoryImpl{}
 }

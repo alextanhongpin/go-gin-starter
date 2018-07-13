@@ -2,10 +2,12 @@ package usersvc
 
 import "github.com/gin-gonic/gin"
 
-// Make initialize a new usersvc
-func Make(r *gin.Engine) {
-	rep := MakeRepository()
-	svc := MakeService(rep)
-	ctl := MakeController(svc)
+// New initialize a new usersvc
+func New(r *gin.Engine) {
+	evt := NewEvent()
+
+	rep := NewRepository()
+	svc := NewService(rep, evt)
+	ctl := NewController(svc)
 	ctl.Setup(r)
 }

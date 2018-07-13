@@ -1,16 +1,27 @@
 package main
 
 import (
-	"github.com/alextanhongpin/go-gin-starter/usersvc"
+	"time"
 
+	"github.com/alextanhongpin/go-gin-starter/config"
+	"github.com/alextanhongpin/go-gin-starter/usersvc"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
-func makeRouter() *gin.Engine {
+func newRouter() *gin.Engine {
 	r := gin.Default()
 
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "OPTIONS"},
+		AllowHeaders:     []string{"Origin"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
+
 	// Setup middlewares, logger etc
-	// r.Use(cors)
 	// r.Use(logger)
 	// r.Use(secure)
 
@@ -19,15 +30,17 @@ func makeRouter() *gin.Engine {
 
 func main() {
 	// Setup dependencies
-	// cfg := config.New()
+	cfg := config.New()
+	cfg.AutomaticEnv()
 	// db := database.New()
-	r := makeRouter()
+
+	r := newRouter()
 
 	// Setup services
-	usersvc.Make(r)
-	// svc1.Make(r, ...options)
-	// svc2.Make(r, ...options)
-	// svc3.Make(r, ...options)
+	usersvc.New(r)
+	// svc1.New(r, ...options)
+	// svc2.New(r, ...options)
+	// svc3.New(r, ...options)
 
 	r.Run(":3000")
 }

@@ -2,14 +2,20 @@ package usersvc
 
 import "github.com/alextanhongpin/go-gin-starter/model"
 
-type repository interface {
-	GetUser(name string) (*model.User, error)
-}
+type (
+	repository interface {
+		GetUser(name string) (*model.User, error)
+	}
 
-// Service represents the business layer for the user service
-type Service struct {
-	Repository repository
-}
+	event interface {
+	}
+
+	// Service represents the business layer for the user service
+	Service struct {
+		Repository repository
+		Event      event
+	}
+)
 
 // GetUser returns the user by name
 func (svc *Service) GetUser(name string) (*model.User, error) {
@@ -17,10 +23,12 @@ func (svc *Service) GetUser(name string) (*model.User, error) {
 	if err != nil {
 		return nil, err
 	}
+	// Example of emitting webhook events
+	// svc.Event.CreatedUser(name)
 	return u, nil
 }
 
-// MakeService returns a pointer to the userService
-func MakeService(r repository) *Service {
-	return &Service{r}
+// NewService returns a pointer to the userService
+func NewService(r repository, e event) *Service {
+	return &Service{r, e}
 }

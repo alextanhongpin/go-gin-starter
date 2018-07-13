@@ -25,3 +25,12 @@ $ vgo get -u
 ```bash
 $ go run main.go
 ```
+
+## TODO
+
+- event logging (for webhook)
+- logger
+- cors
+- secure
+- cancellation/retry/circuit breaker
+- tracing

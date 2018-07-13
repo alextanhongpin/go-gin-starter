@@ -47,7 +47,7 @@ func (u *Controller) Setup(r *gin.Engine) {
 	}
 }
 
-// MakeController returns a pointer to the userController
-func MakeController(s service) *Controller {
+// NewController returns a pointer to the userController
+func NewController(s service) *Controller {
 	return &Controller{s}
 }
