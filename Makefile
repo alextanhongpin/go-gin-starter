@@ -42,3 +42,6 @@ docker:
 
 start:
 	vgo run main.go
+
+greet:
+	@echo hello
