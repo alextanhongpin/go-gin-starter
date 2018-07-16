@@ -17,7 +17,7 @@ IMAGE_NAME := alextanhongpin/go-gin-starter
 define HELP
 usage: make (sub-commands ...)
 
-Get started with gin.
+Gin Starter commands.
 
 commands:
 endef
