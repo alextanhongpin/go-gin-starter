@@ -1,4 +1,5 @@
-include .env
+# Include only if exist
+-include .env
 export
 
 .PHONY: vendor help
