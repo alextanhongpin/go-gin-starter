@@ -1,7 +1,8 @@
 include .env
 export
 
-.PHONY: vendor
+.PHONY: vendor help
+
 
 # Docker labels-schema. See http://label-schema.org/rc1/
 IMAGE_NAME := alextanhongpin/go-gin-starter
@@ -19,18 +20,22 @@ usage: make (sub-commands ...)
 Get started with gin.
 
 commands:
-  install Install vgo and dependencies
-
 endef
 
-default:
-	echo "$$HELP"
+# default:
+# 	echo "$$HELP"
 
-vendor:
+help: ## Display help
+	@echo "$$HELP"
+	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+
+.DEFAULT_GOAL := help
+
+vendor:	## Vendor the application
 	@vgo mod -vendor
 	@vgo mod -sync
 
-docker:
+docker: ## Build the docker image
 	@docker build -t ${IMAGE_NAME} .
 	# --build-arg BUILD_DATE="${BUILD_DATE}" \
 	# --build-arg IMAGE_NAME="${IMAGE_NAME}" \
@@ -40,7 +45,7 @@ docker:
 	# --build-arg VENDOR="${VENDOR}" \
 	# --build-arg VERSION="${VERSION}" \
 
-start:
+start: ## Start the application
 	vgo run main.go
 
 greet:
