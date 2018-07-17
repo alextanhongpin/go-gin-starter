@@ -7,13 +7,13 @@ export
 
 # Docker labels-schema. See http://label-schema.org/rc1/
 IMAGE_NAME := alextanhongpin/go-gin-starter
-# TAG := $(shell git log -1 --pretty=%h)
-# BUILD_DATE := $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
-# NAME := $(shell basename `git rev-parse --show-toplevel`)
-# VCS_URL := $(shell git config --get remote.origin.url)
-# VCS_REF := $(shell git rev-parse HEAD)
-# VENDOR := $(shell whoami)
-# VERSION := $(shell git rev-parse --short HEAD)
+TAG := $(shell git rev-parse --short HEAD)
+BUILD_DATE := $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
+NAME := $(shell basename `git rev-parse --show-toplevel`)
+VCS_URL := $(shell git config --get remote.origin.url)
+VCS_REF := $(shell git rev-parse HEAD)
+VENDOR := $(shell whoami)
+VERSION := $(shell git rev-parse --short HEAD)
 
 define HELP
 usage: make (sub-commands ...)
@@ -43,14 +43,21 @@ vendor:	## Vendor the application
 	@vgo mod -sync # Syncs the current version
 
 docker: ## Build the docker image
-	@docker build -t ${IMAGE_NAME} .
-	# --build-arg BUILD_DATE="${BUILD_DATE}" \
-	# --build-arg IMAGE_NAME="${IMAGE_NAME}" \
-	# --build-arg NAME="${NAME}" \
-	# --build-arg VCS_URL="${VCS_URL}" \
-	# --build-arg VCS_REF="${VCS_REF}" \
-	# --build-arg VENDOR="${VENDOR}" \
-	# --build-arg VERSION="${VERSION}" \
+	@docker build \
+	--build-arg BUILD_DATE="${BUILD_DATE}" \
+	--build-arg IMAGE_NAME="${IMAGE_NAME}" \
+	--build-arg NAME="${NAME}" \
+	--build-arg VCS_URL="${VCS_URL}" \
+	--build-arg VCS_REF="${VCS_REF}" \
+	--build-arg VENDOR="${VENDOR}" \
+	--build-arg VERSION="${VERSION}" \
+	-t ${IMAGE_NAME} . 
 
 start:
 	vgo run main.go
+
+inspect: ## View the docker image tags
+	@docker inspect --format='{{json .Config.Labels}}' $(IMAGE_NAME)
+
+test: ## Run unit test
+	@vgo test ./...

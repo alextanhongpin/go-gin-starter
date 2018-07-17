@@ -5,6 +5,7 @@ import (
 
 	"github.com/alextanhongpin/go-gin-starter/middleware"
 	"github.com/alextanhongpin/go-gin-starter/model"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -27,9 +28,9 @@ func (u *Controller) GetUser(c *gin.Context) {
 	name := c.Param("name")
 	user, err := u.Service.GetUser(name)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"code":    http.StatusBadRequest,
-			"message": err.Error(),
+		c.JSON(http.StatusBadRequest, model.ErrorResponse{
+			Code:    http.StatusBadRequest,
+			Message: err.Error(),
 		})
 		return
 	}
@@ -39,10 +40,10 @@ func (u *Controller) GetUser(c *gin.Context) {
 	})
 }
 
-// Setup binds the router to the user controllers
-func (u *Controller) Setup(r *gin.Engine, enable bool) {
+// Setup will bind the controllers to the routes
+func (u *Controller) Setup(r *gin.Engine, on bool) {
 	e := r.Group("/users")
-	e.Use(middleware.Toggle(enable))
+	e.Use(middleware.Toggle(on))
 	{
 		e.GET("/:name", u.GetUser)
 		// e.POST("", u.PostUser)

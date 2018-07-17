@@ -11,4 +11,3 @@ Makefile
 .env
 
 # Exclude vendor folder
-# vendor/

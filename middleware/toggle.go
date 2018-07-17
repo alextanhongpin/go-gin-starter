@@ -3,6 +3,8 @@ package middleware
 import (
 	"net/http"
 
+	"github.com/alextanhongpin/go-gin-starter/model"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -10,10 +12,9 @@ import (
 func Toggle(on bool) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		if !on {
-			code := http.StatusNotImplemented
-			c.JSON(code, gin.H{
-				"code":    code,
-				"message": "This endpoint is not available",
+			c.JSON(http.StatusNotImplemented, model.ErrorResponse{
+				Code:    http.StatusNotImplemented,
+				Message: "This endpoint is not available",
 			})
 			c.Abort()
 			return

@@ -1,26 +1,21 @@
 package main
 
 import (
-	"time"
+	"fmt"
+	"net/http"
 
 	"github.com/alextanhongpin/go-gin-starter/config"
+	"github.com/alextanhongpin/go-gin-starter/middleware"
 	"github.com/alextanhongpin/go-gin-starter/usersvc"
 
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 func newRouter() *gin.Engine {
 	r := gin.Default()
 
-	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"*"},
-		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "OPTIONS"},
-		AllowHeaders:     []string{"Origin"},
-		ExposeHeaders:    []string{"Content-Length"},
-		AllowCredentials: true,
-		MaxAge:           12 * time.Hour,
-	}))
+	r.Use(middleware.Cors())
+	r.Use(middleware.RequestID())
 
 	// Setup middlewares, logger etc
 	// r.Use(logger)
@@ -37,11 +32,20 @@ func main() {
 
 	r := newRouter()
 
-	// Setup services
-	usersvc.New(r, cfg.GetBool("usersvc_on"))
-	// svc1.New(r, ...options)
-	// svc2.New(r, ...options)
-	// svc3.New(r, ...options)
+	r.GET("/health", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"build_date":  cfg.GetString("build_date"),
+			"version":     cfg.GetString("version"),
+			"deployed_at": cfg.GetString("deployed_at"),
+		})
+	})
 
-	r.Run(":3000")
+	// Setup services
+	usvc := usersvc.New()
+
+	// Setup controllers
+	uctl := usersvc.NewController(usvc)
+	uctl.Setup(r, cfg.GetBool("usersvc_on"))
+
+	r.Run(fmt.Sprintf(":%d", cfg.GetInt("port")))
 }

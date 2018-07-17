@@ -7,13 +7,14 @@ WORKDIR $GOPATH/src/github.com/alextanhongpin/go-gin-starter
 COPY . .
 
 # Get the vendor library
-RUN go version && go get -u golang.org/x/vgo
+RUN go version && go get -v golang.org/x/vgo
 
-RUN vgo install
+# RUN vgo install
 
 # https://github.com/ethereum/go-ethereum/issues/2738
 # Build static binary "-getmode=vendor" does not work with go-ethereum 
-RUN vgo build -getmode=vendor -o app -ldflags "-linkmode external -extldflags -static"
+RUN vgo build -getmode=vendor -o app 
+# -ldflags "-linkmode external -extldflags -static"
 
 # Multi-stage build will just copy the binary to an alpine image.
 FROM alpine:3.7
@@ -31,27 +32,27 @@ EXPOSE 3000
 # Copy the binary to the corresponding folder
 COPY --from=builder /go/src/github.com/alextanhongpin/go-gin-starter/app .
 
-# ARG BUILD_DATE
-# ARG NAME
-# ARG VCS_URL
-# ARG VCS_REF
-# ARG VENDOR
-# ARG VERSION
-# ARG IMAGE_NAME
+ARG BUILD_DATE
+ARG NAME
+ARG VCS_URL
+ARG VCS_REF
+ARG VENDOR
+ARG VERSION
+ARG IMAGE_NAME
 
-# ENV BUILD_DATE $BUILD_DATE
-# ENV VERSION $VERSION
+ENV BUILD_DATE $BUILD_DATE
+ENV VERSION $VERSION
 
-# LABEL org.label-schema.build-date=$BUILD_DATE \
-#       org.label-schema.name=$NAME \
-#       org.label-schema.description="PPN Api Gateway Server" \
-#       org.label-schema.url="https://example.com" \
-#       org.label-schema.vcs-url=$VCS_URL \
-#       org.label-schema.vcs-ref=$VCS_REF \
-#       org.label-schema.vendor=$VENDOR \
-#       org.label-schema.version=$VERSION \
-#       org.label-schema.docker.schema-version="1.0" \
-#       org.label-schema.docker.cmd="docker run -d $IMAGE_NAME"
+LABEL org.label-schema.build-date=$BUILD_DATE \
+      org.label-schema.name=$NAME \
+      org.label-schema.description="go gin starter application" \
+      org.label-schema.url="https://example.com" \
+      org.label-schema.vcs-url=$VCS_URL \
+      org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.vendor=$VENDOR \
+      org.label-schema.version=$VERSION \
+      org.label-schema.docker.schema-version="1.0" \
+      org.label-schema.docker.cmd="docker run -d $IMAGE_NAME"
 
 # Run the binary
 CMD ["/root/app"]
