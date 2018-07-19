@@ -21,14 +21,6 @@ usage: make (sub-commands ...)
 Gin Starter commands.
 
 commands:
-  install  Install vgo and dependencies
-  env      Describe the environment variables
-  deploy   Deploy to the designated environment (production, staging, .etc)
-  start    Start the application
-  stop     Stop the application
-  version  Current application version
-  build    Build the application
-
 endef
 
 help: ## Display help
